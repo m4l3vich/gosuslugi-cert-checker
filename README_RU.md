@@ -2,7 +2,7 @@
 
 Модуль для проверки сертификатов COVID-19, сгенерированных Госуслугами (ЕПГУ)
 
-![npm](https://img.shields.io/npm/v/gosuslugi-cert-checker) ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)
+[![npm](https://img.shields.io/npm/v/gosuslugi-cert-checker)](https://www.npmjs.com/package/gosuslugi-cert-checker) [![Typescript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
 
@@ -43,7 +43,7 @@ import { parseUrl } from 'gosuslugi-cert-checker'
 const someValidUrl = 'https://www.gosuslugi.ru/covid-cert/verify/{{unrz}}?lang=ru&ck={{hash}}'
 const { version, params } = parseUrl(someValidUrl) // бросает InvalidUrlError, если ссылка некорректная
 // version = 2
-/// params = { unrz: "{{unrz}}", hash: "{{hash}}" }
+// params = { unrz: "{{unrz}}", hash: "{{hash}}" }
 ```
 
 Получение информации о сертификате по URL
@@ -69,7 +69,7 @@ EpguCertificate {
 }
 */
 
-console.log(certificate.expired) // true if certificate is expired
+console.log(certificate.expired) // Возвращает true, если срок действия сертификата истёк
 ```
 
 
