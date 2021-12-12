@@ -20,6 +20,7 @@ export async function fetchCertificateV1 (params: IParametersV1): Promise<EpguCe
     expiration: parseEpguDate(json.expiredAt),
     birthdate: parseEpguDate(json.birthdate),
     passport: json.doc,
+    status: json.status === '1',
     name: {
       ru: json.fio,
       en: json.enFio
@@ -52,6 +53,7 @@ export async function fetchCertificateV2 (params: IParametersV2): Promise<EpguCe
     expiration: parseEpguDate(cert.expiredAt),
     birthdate: parseEpguDate(birthdate),
     passport,
+    status: cert.status === '1' || cert.status === 'Отрицательный',
     name: {
       ru: fio.value,
       en: fio.envalue
@@ -67,6 +69,7 @@ export async function fetchCertificateV3 (params: IParametersV3): Promise<EpguCe
   if (resp.status >= 500) throw new EpguApiInternalError(resp.status, resp.statusText)
 
   const json = await resp.json() as IResponseV3
+  if (!json.isCertFound) throw new CertNotFoundError(params.uuid)
 
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
   const birthdate = getAttribute(json.attrs, 'birthDate')!.value
@@ -79,6 +82,7 @@ export async function fetchCertificateV3 (params: IParametersV3): Promise<EpguCe
     expiration: parseEpguDate(json.expiredAt),
     birthdate: parseEpguDate(birthdate),
     passport,
+    status: !json.isExpired && !json.isBeforeValidFrom,
     name: {
       ru: fio.value,
       en: fio.envalue

@@ -3,7 +3,8 @@ import { parse, startOfDay } from 'date-fns'
 export enum EpguCertificateType {
   VACCINE_CERT = 'VACCINE_CERT',
   ILLNESS_FACT = 'ILLNESS_FACT',
-  TEMPORARY_CERT = 'TEMPORARY_CERT'
+  TEMPORARY_CERT = 'TEMPORARY_CERT',
+  COVID_TEST = 'COVID_TEST'
 }
 
 // EpguDate (01.01.1970)
@@ -19,17 +20,10 @@ export function parseEpguDate (date: EpguDate): Date {
 
 // UNRZ (15/16 chars)
 export type UnrzFull = string
-export type UnrzShort = string
 
 export function isUnrzFull (str: string): str is UnrzFull {
   if (isNaN(Number(str))) return false
   if (str.length !== 16) return false
-  return true
-}
-
-export function isUnrzShort (str: string): str is UnrzShort {
-  if (isNaN(Number(str))) return false
-  if (str.length !== 15) return false
   return true
 }
 

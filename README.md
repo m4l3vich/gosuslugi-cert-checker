@@ -57,11 +57,12 @@ const certificate = await EpguCertificate.fetch(someValidUrl)
 console.log(certificate)
 /*
 EpguCertificate {
-  type: undefined, (Only V2 certificates)
+  type: undefined,  (Only V2 certificates)
   certId: '1234567890123456',
   expiration: 1970-01-01T00:00:00.000Z,
   birthdate: 1970-01-01T00:00:00.000Z,
   passport: '12** ***345',
+  status: true  (On PCR test certificate: true = negative result, false = positive result)
   name: {
     ru: 'Б********* И**** З***********',
     en: 'B********* I**** Z***********'
@@ -92,11 +93,13 @@ API URL format: `https://www.gosuslugi.ru/api/vaccine/v1/cert/verify/{{uuid}}`
 
 *Summer 2021 (presumably) - 08.11.2021? (new certificate type introduced)*
 
+Still used for PCR test result certificates (as for 06.12.2021)
 Has a "type" field with one of the following values:
 
 - `VACCINE_CERT` - One-year vaccination certificate
 - `ILLNESS_FACT` - Previous disease certificate ("attrs" field includes recovery date info)
 - `TEMPORARY_CERT` - Temporary vaccination certificate
+- `COVID_TEST` - PCR test result certificate
 
 URL format: `https://www.gosuslugi.ru/covid-cert/verify/{{unrz}}?lang={{lang}}&ck={{hash}}`
 
