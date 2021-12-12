@@ -10,6 +10,7 @@ export interface ICertificateFields {
   expiration: Date,
   birthdate: Date,
   passport: string,
+  status: boolean,
   name: {
     ru: string,
     en: string
@@ -22,6 +23,7 @@ export class EpguCertificate implements ICertificateFields {
   public expiration: Date
   public birthdate: Date
   public passport: string
+  public status: boolean
   public name: {
     ru: string,
     en: string
@@ -43,6 +45,7 @@ export class EpguCertificate implements ICertificateFields {
     this.expiration = params.expiration
     this.birthdate = params.birthdate
     this.passport = params.passport
+    this.status = params.status
     this.name = params.name
   }
 
