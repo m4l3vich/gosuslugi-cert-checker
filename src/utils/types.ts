@@ -3,7 +3,8 @@ import { parse, startOfDay } from 'date-fns'
 export enum EpguCertificateType {
   VACCINE_CERT = 'VACCINE_CERT',
   ILLNESS_FACT = 'ILLNESS_FACT',
-  TEMPORARY_CERT = 'TEMPORARY_CERT'
+  TEMPORARY_CERT = 'TEMPORARY_CERT',
+  COVID_TEST = 'COVID_TEST'
 }
 
 // EpguDate (01.01.1970)
