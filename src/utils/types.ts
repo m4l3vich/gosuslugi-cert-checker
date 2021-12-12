@@ -18,7 +18,7 @@ export function parseEpguDate (date: EpguDate): Date {
   return parse(date, 'dd.MM.yyyy', startOfDay(new Date()))
 }
 
-// UNRZ (15/16 chars)
+// UNRZ (16 chars)
 export type UnrzFull = string
 
 export function isUnrzFull (str: string): str is UnrzFull {
