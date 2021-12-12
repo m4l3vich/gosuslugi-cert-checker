@@ -36,7 +36,7 @@ export interface IResponseV2 {
     title: string,
     entitle: string,
     qr: string,
-    status: '1' | '0',
+    status: '1' | '0' | 'Положительный' | 'Отрицательный',
     order: number,
     expiredAt: EpguDate,
     serviceUnavailable: boolean
