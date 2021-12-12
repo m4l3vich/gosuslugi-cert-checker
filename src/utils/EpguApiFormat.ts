@@ -1,4 +1,4 @@
-import { EpguCertificateType, EpguDate, UnrzFull, UnrzShort } from './types.js'
+import { EpguCertificateType, EpguDate, UnrzFull } from './types.js'
 
 export interface IResponseV1 {
   unrz: UnrzFull,
@@ -30,7 +30,7 @@ interface AttrV2 {
 export interface IResponseV2 {
   items: [{
     type: EpguCertificateType,
-    unrz: UnrzShort,
+    unrz: string,
     unrzFull: UnrzFull,
     attrs: AttrV2[],
     title: string,
