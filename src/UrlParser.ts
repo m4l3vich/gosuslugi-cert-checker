@@ -1,28 +1,8 @@
 import assert from 'assert'
 import { CERT_URL_ORIGIN, V1_PATH_START, V2_PATH_START, V3_PATH_START } from './utils/constants.js'
 import { IParametersV1, IParametersV2, IParametersV3, isParamsV1Valid, isParamsV2Valid, isParamsV3Valid } from './utils/EpguApiParameters.js'
+import { InvalidUrlError, UrlErrCode } from './utils/errors.js'
 import { CertHash } from './utils/types.js'
-
-export enum UrlErrCode {
-  MalformedUrl,
-  InvalidOrigin,
-  InvalidPath,
-  InvalidParameters
-}
-
-export const urlErrString = [
-  'Malformed URL',
-  'Invalid URL origin',
-  'Invalid URL path',
-  'Invalid certificate parameters'
-]
-
-class InvalidUrlError extends Error {
-  constructor (code: UrlErrCode) {
-    super(`Error while parsing URL: ${urlErrString[code]}`)
-    Object.setPrototypeOf(this, InvalidUrlError.prototype)
-  }
-}
 
 export interface IParsedUrl {
   version: 1 | 2 | 3,

@@ -14,3 +14,25 @@ export class EpguApiInternalError extends Error {
     Object.setPrototypeOf(this, EpguApiInternalError.prototype)
   }
 }
+
+// URL parser errors
+export enum UrlErrCode {
+  MalformedUrl,
+  InvalidOrigin,
+  InvalidPath,
+  InvalidParameters
+}
+
+export const urlErrString = [
+  'Malformed URL',
+  'Invalid URL origin',
+  'Invalid URL path',
+  'Invalid certificate parameters'
+]
+
+export class InvalidUrlError extends Error {
+  constructor (code: UrlErrCode) {
+    super(`Error while parsing URL: ${urlErrString[code]}`)
+    Object.setPrototypeOf(this, InvalidUrlError.prototype)
+  }
+}
