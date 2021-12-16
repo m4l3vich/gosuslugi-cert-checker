@@ -94,6 +94,7 @@ API URL format: `https://www.gosuslugi.ru/api/vaccine/v1/cert/verify/{{uuid}}`
 *Summer 2021 (presumably) - 08.11.2021? (new certificate type introduced)*
 
 Still used for PCR test result certificates (as for 06.12.2021)
+
 Has a "type" field with one of the following values:
 
 - `VACCINE_CERT` - One-year vaccination certificate

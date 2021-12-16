@@ -1,7 +1,7 @@
-import fetch from 'node-fetch'
+import axios from 'axios'
 import { EpguCertificate } from './Certificate.js'
 import { V1_API_URL, V2_API_URL, V3_API_URL } from './utils/constants.js'
-import { getAttribute, IResponseV1, IResponseV2, IResponseV3 } from './utils/EpguApiFormat.js'
+import { getAttribute, IResponseV1, IResponseV2, IResponseV3, statusStrToBool } from './utils/EpguApiFormat.js'
 import { IParametersV1, IParametersV2, IParametersV3 } from './utils/EpguApiParameters.js'
 import { CertNotFoundError, EpguApiInternalError } from './utils/errors.js'
 import { parseEpguDate } from './utils/types.js'
@@ -9,11 +9,11 @@ import { parseEpguDate } from './utils/types.js'
 export async function fetchCertificateV1 (params: IParametersV1): Promise<EpguCertificate> {
   const url = new URL(encodeURIComponent(params.uuid), V1_API_URL)
 
-  const resp = await fetch(url.toString())
+  const resp = await axios(url.toString())
   if (resp.status > 200 && resp.status < 500) throw new CertNotFoundError(params.uuid)
   if (resp.status >= 500) throw new EpguApiInternalError(resp.status, resp.statusText)
 
-  const json = await resp.json() as IResponseV1
+  const json = await resp.data as IResponseV1
 
   return new EpguCertificate({
     certId: json.unrz,
@@ -33,11 +33,11 @@ export async function fetchCertificateV2 (params: IParametersV2): Promise<EpguCe
   url.searchParams.set('ck', encodeURIComponent(params.hash))
   url.searchParams.set('lang', 'ru')
 
-  const resp = await fetch(url.toString())
+  const resp = await axios(url.toString())
   if (resp.status > 200 && resp.status < 500) throw new CertNotFoundError(params.unrz)
   if (resp.status >= 500) throw new EpguApiInternalError(resp.status, resp.statusText)
 
-  const json = await resp.json() as IResponseV2
+  const json = await resp.data as IResponseV2
 
   const cert = json.items[0]
 
@@ -53,7 +53,7 @@ export async function fetchCertificateV2 (params: IParametersV2): Promise<EpguCe
     expiration: parseEpguDate(cert.expiredAt),
     birthdate: parseEpguDate(birthdate),
     passport,
-    status: cert.status === '1' || cert.status === 'Отрицательный',
+    status: statusStrToBool(cert.status),
     name: {
       ru: fio.value,
       en: fio.envalue
@@ -64,11 +64,11 @@ export async function fetchCertificateV2 (params: IParametersV2): Promise<EpguCe
 export async function fetchCertificateV3 (params: IParametersV3): Promise<EpguCertificate> {
   const url = new URL(encodeURIComponent(params.uuid), V3_API_URL)
 
-  const resp = await fetch(url.toString())
+  const resp = await axios(url.toString())
   if (resp.status > 200 && resp.status < 500) throw new CertNotFoundError(params.uuid)
   if (resp.status >= 500) throw new EpguApiInternalError(resp.status, resp.statusText)
 
-  const json = await resp.json() as IResponseV3
+  const json = await resp.data as IResponseV3
   if (!json.isCertFound) throw new CertNotFoundError(params.uuid)
 
   /* eslint-disable @typescript-eslint/no-non-null-assertion */

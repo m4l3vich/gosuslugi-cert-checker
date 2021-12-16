@@ -27,6 +27,25 @@ interface AttrV2 {
   order: number
 }
 
+export type falsyStatus = '0' | '3' | 'CANCELLED' | 'EXPIRED' | '404' | 'Положительный'
+export type truthyStatus = '1' | 'OK' | 'Отрицательный'
+
+export function statusStrToBool (str: string) {
+  if (str === '1') return true
+  if (str === 'OK') return true
+  if (str === 'Отрицательный') return true
+
+  if (str === '0') return false
+  if (str === '3') return false
+  if (str === 'CANCELLED') return false
+  if (str === 'EXPIRED') return false
+  if (str === '404') return false
+  if (str === 'Положительный') return false
+
+  console.warn(`Unknown cert status: ${str}; assuming status is falsy`)
+  return false
+}
+
 export interface IResponseV2 {
   items: [{
     type: EpguCertificateType,
@@ -36,7 +55,7 @@ export interface IResponseV2 {
     title: string,
     entitle: string,
     qr: string,
-    status: '1' | '0' | 'Положительный' | 'Отрицательный',
+    status: falsyStatus | truthyStatus,
     order: number,
     expiredAt: EpguDate,
     serviceUnavailable: boolean
