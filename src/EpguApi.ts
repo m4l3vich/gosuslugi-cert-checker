@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { EpguCertificate } from './Certificate.js'
 import { V1_API_URL, V2_API_URL, V3_API_URL } from './utils/constants.js'
-import { getAttribute, IResponseV1, IResponseV2, IResponseV3 } from './utils/EpguApiFormat.js'
+import { getAttribute, IResponseV1, IResponseV2, IResponseV3, statusStrToBool } from './utils/EpguApiFormat.js'
 import { IParametersV1, IParametersV2, IParametersV3 } from './utils/EpguApiParameters.js'
 import { CertNotFoundError, EpguApiInternalError } from './utils/errors.js'
 import { parseEpguDate } from './utils/types.js'
@@ -53,7 +53,7 @@ export async function fetchCertificateV2 (params: IParametersV2): Promise<EpguCe
     expiration: parseEpguDate(cert.expiredAt),
     birthdate: parseEpguDate(birthdate),
     passport,
-    status: cert.status === '1' || cert.status === 'Отрицательный',
+    status: statusStrToBool(cert.status),
     name: {
       ru: fio.value,
       en: fio.envalue
