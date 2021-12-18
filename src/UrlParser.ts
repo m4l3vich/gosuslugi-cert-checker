@@ -1,4 +1,3 @@
-import assert from 'assert'
 import { CERT_URL_ORIGIN, V1_PATH_START, V2_PATH_START, V3_PATH_START } from './utils/constants.js'
 import { IParametersV1, IParametersV2, IParametersV3, isParamsV1Valid, isParamsV2Valid, isParamsV3Valid } from './utils/EpguApiParameters.js'
 import { InvalidUrlError, UrlErrCode } from './utils/errors.js'
@@ -29,10 +28,9 @@ export function parseUrl (url: string): IParsedUrl {
   }
 
   // Check URL origin
-  assert(
-    urlObj.origin === CERT_URL_ORIGIN,
-    new InvalidUrlError(UrlErrCode.InvalidOrigin)
-  )
+  if (urlObj.origin !== CERT_URL_ORIGIN) {
+    throw new InvalidUrlError(UrlErrCode.InvalidOrigin)
+  }
 
   // Check URL version by path
   const pathParts = urlObj.pathname.split('/')
@@ -48,10 +46,7 @@ export function parseUrl (url: string): IParsedUrl {
       version = 1
 
       params = { uuid: filename }
-      assert(
-        isParamsV1Valid(params),
-        new InvalidUrlError(UrlErrCode.InvalidParameters)
-      )
+      if (!isParamsV1Valid(params)) throw new InvalidUrlError(UrlErrCode.InvalidParameters)
       break
     }
 
@@ -62,10 +57,7 @@ export function parseUrl (url: string): IParsedUrl {
       if (!ckParam) throw new InvalidUrlError(UrlErrCode.InvalidParameters)
 
       params = { unrz: filename, hash: ckParam as CertHash }
-      assert(
-        isParamsV2Valid(params),
-        new InvalidUrlError(UrlErrCode.InvalidParameters)
-      )
+      if (!isParamsV2Valid(params)) throw new InvalidUrlError(UrlErrCode.InvalidParameters)
       break
     }
 
@@ -73,10 +65,7 @@ export function parseUrl (url: string): IParsedUrl {
       version = 3
 
       params = { uuid: filename }
-      assert(
-        isParamsV3Valid(params),
-        new InvalidUrlError(UrlErrCode.InvalidParameters)
-      )
+      if (!isParamsV3Valid(params)) throw new InvalidUrlError(UrlErrCode.InvalidParameters)
       break
     }
 
