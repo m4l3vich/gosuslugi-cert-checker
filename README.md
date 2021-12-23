@@ -77,7 +77,7 @@ console.log(certificate.expired) // true if certificate is expired
 
 ### Certificate URL versions
 
-_**If you have more info on certificate URL versions, please fill free to [open an issue](https://github.com/m4l3vich/gosuslugi-cert-checker/issues/new)**_
+_**If you have more info on certificate URL versions, feel free to [open an issue](https://github.com/m4l3vich/gosuslugi-cert-checker/issues/new)**_
 
 #### Version 1
 
