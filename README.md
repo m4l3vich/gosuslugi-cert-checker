@@ -93,6 +93,8 @@ API URL format: `https://www.gosuslugi.ru/api/vaccine/v1/cert/verify/{{uuid}}`
 
 *Summer 2021 (presumably) - 08.11.2021? (new certificate type introduced)*
 
+**⚠️ Version 2 API was disabled by EPGU due to possible [UNRZ enumeration attack (RU)](https://www.bbc.com/russian/news-60130755), which was used a certificate database.**
+
 Still used for PCR test result certificates (as for 06.12.2021)
 
 Has a "type" field with one of the following values:
