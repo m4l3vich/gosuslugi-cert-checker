@@ -71,9 +71,10 @@ EpguCertificate {
 */
 
 console.log(certificate.expired) // true if certificate is expired
+console.log(certificate.valid) // true if certificate is correct and not expired
 ```
 
-
+⚠️ You should use the `valid` property for checking the validity of a certificate. Use `status` only for determining the positive/negative status of a PCR test result.
 
 ### Certificate URL versions
 
@@ -93,7 +94,7 @@ API URL format: `https://www.gosuslugi.ru/api/vaccine/v1/cert/verify/{{uuid}}`
 
 *Summer 2021 (presumably) - 08.11.2021? (new certificate type introduced)*
 
-**⚠️ Version 2 API was disabled by EPGU due to possible [UNRZ enumeration attack (RU)](https://www.bbc.com/russian/news-60130755), which was used to create a certificate database.**
+**⚠️ After a possible [UNRZ enumeration attack (RU)](https://www.bbc.com/russian/news-60130755), which was used to create a certificate database, version 2 API does only check PCR test certificates. Now older V2 vaccination certificates are always being treated as invalid.**
 
 Still used for PCR test result certificates (as for 06.12.2021)
 
@@ -106,7 +107,11 @@ Has a "type" field with one of the following values:
 
 URL format: `https://www.gosuslugi.ru/covid-cert/verify/{{unrz}}?lang={{lang}}&ck={{hash}}`
 
-API URL format: `https://www.gosuslugi.ru/api/covid-cert/v3/cert/check/{{unrz}}?lang={{lang}}&ck={{hash}}`
+After UNRZ enumeration attack API link was changed (maybe there are some changes to the API that prevent enumeration attacks):
+
+Old API URL format: `https://www.gosuslugi.ru/api/covid-cert/v3/cert/check/{{unrz}}?lang={{lang}}&ck={{hash}}`
+
+New API URL format: `https://www.gosuslugi.ru/api/covid-cert/v4/cert/check/{{unrz}}?lang={{lang}}&ck={{hash}}`
 
 #### Version 3
 

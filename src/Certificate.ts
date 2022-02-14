@@ -52,4 +52,8 @@ export class EpguCertificate implements ICertificateFields {
   get expired (): boolean {
     return isPast(this.expiration)
   }
+
+  get valid (): boolean {
+    return !this.expired && this.status
+  }
 }
